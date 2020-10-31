@@ -1,0 +1,153 @@
+using c language we have done insertion and deletion in double linked list
+#include<stdio.h>
+#include<malloc.h>
+#include<stdlib.h>
+struct node
+{
+    struct node *plink;
+    int data;
+    struct node *nlink;
+};
+struct node *generate()
+{
+    struct node *new;
+    new = (struct node*)malloc(sizeof(struct node));
+    return new;
+}
+struct node *insertion(struct node *start,int pos,int item)
+{
+    struct node*temp,*new;
+    temp = start;
+    new = generate();
+    new->nlink = NULL;
+    new->plink = NULL;
+    new->data = item;
+    if(pos==1)
+    {
+     new->nlink=temp;
+     temp->plink=new;
+     start=new;
+     temp=new;
+    }
+ else
+ {
+    while(pos>2)
+    {
+        temp = temp->nlink;
+        if(temp->nlink == NULL)
+        break;
+        pos=pos-1;
+    }
+    if(pos==2)
+    {
+        new->plink =temp;
+        new->nlink =temp->nlink;
+        temp->nlink =new;
+    }
+    temp->nlink =new;
+    new->plink =temp;
+    temp = start;
+}
+return temp;
+}
+struct node *deletion(struct node*start,int pos)
+{
+    struct node *temp,*temp1;
+    temp=start;
+    if(pos==1)
+   {
+       temp=temp->nlink;
+       temp->plink=NULL;
+       start=temp;
+   }
+   else
+   {
+       temp=start;
+       while(pos>2)
+       {
+           temp=temp->nlink;
+           pos=pos-1;
+       }
+       temp1=temp->nlink;
+       temp->nlink=temp1->nlink;
+       if(temp1->nlink!= NULL)
+       (temp1->nlink)->plink=temp;
+   }
+   return start;
+}
+int main()
+{
+    struct node *start,*temp,*new,*temp1;
+    int item;
+    start=NULL;
+    do
+    {
+        printf("enter the number you want to insert and -1 to quit:" );
+        scanf("%d",&item);
+        if(item ==-1)
+        break;
+        new =generate();
+        new->plink=NULL;
+        new->data=item;
+        new->nlink=NULL;
+        if(start==NULL)
+        {
+            start=new;
+            temp=new;
+        }
+        else
+        {
+            new->plink = temp;
+            temp->nlink=new;
+            temp=new;
+        }
+    }
+    while(1);
+    temp=start;
+    while(temp!=NULL)
+    {
+        temp1=temp;
+        printf("%d->",temp->data);
+        temp=temp->nlink;
+    } 
+    printf("\n");
+    while(temp!=NULL)
+    {
+        printf("%d->",temp1->data);
+        temp1=temp->plink;
+    }
+    int pos,n;
+    printf("\n enter the number you want to insert:");
+    scanf("%d",&n);
+    printf("\n enter the position you want to insert:");
+    scanf("%d",&pos);
+    start=insertion(start,pos,n);
+    temp=start;
+    int y=1;
+    while(temp!=NULL)
+    {
+        printf("%d->",temp->data);
+        temp=temp->nlink;
+    }
+      int x;
+        printf("\n enter the psition you want to do deletion:");
+        scanf("%d",&x);
+        start= deletion(start ,x);
+        temp=start;
+        while(temp!=NULL)
+       {
+           temp1=temp;
+           printf("%d->",temp->data);
+            temp=temp->nlink;
+       }
+          printf("\n");
+          while(temp1!=NULL)
+           {
+               printf("%d->",temp1->data);
+               temp1=temp1->plink;
+           }
+           return 0;
+}          
+    
+        
+    

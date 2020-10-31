@@ -1,0 +1,97 @@
+program on binary search tree using all operations.
+
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+    int data;
+    struct node *left;
+    struct node *right;
+};
+ void Preorder(struct node* root)
+ {
+     if(root != NULL)
+     {
+         printf("%d->",root->data);
+         Preorder(root->left);
+         Preorder(root->right);
+     }
+ }
+
+void Inorder(struct node *root)
+{
+    if (root!=NULL)
+    {
+        Inorder(root->left);
+        printf("%d->",root->data);
+        Inorder(root->right);
+    }
+}
+void Postorder(struct node* root)
+{
+    if(root != NULL)
+     {
+         Postorder(root->left);
+         Postorder(root->right);
+         printf("%d->",root->data);
+     }
+}
+int main()
+{
+    struct node *root , *newnode,*temp,*ptemp;
+    int choice, data,lr;
+    root=NULL;
+     newnode=(struct node*)malloc(sizeof (struct node*));
+     newnode->data = 54;
+     newnode->left  = NULL;
+     newnode->right =NULL;
+     root=newnode;
+     while(1)
+     {
+         printf("\n enter the data to add in the tree(-1 to stop)");
+         scanf("%d->",&data);
+         if(data==-1)
+         break;
+         newnode=(struct node*)malloc(sizeof (struct node*));
+         newnode->data=data;
+         newnode->left = NULL;
+         newnode->right = NULL;
+        if(root==NULL)
+        {
+         root=newnode;
+        }
+        else
+        {
+         temp=root;
+         while(temp!=NULL)
+         {
+             ptemp=temp;
+            printf("\n enter 1 for left 2 for right of %d->:",ptemp->data);
+            scanf("%d->",&choice);
+            if (choice==1)
+            temp=temp->left;
+            else
+            if(choice==2)
+            temp=temp->right;
+            else
+            {
+                printf("invalid choice");
+                continue;
+            }
+         }
+         if(choice==1)
+         ptemp->left=newnode;
+         else
+         ptemp->right=newnode;
+     }
+     }
+     printf("\t");
+     printf("\n Preorder traversal of tree is:");
+     Preorder(root);
+     printf("\n Inorder traversal of  tree is:");
+     Inorder(root);
+     printf("\n Postorder traversal of tree is:");
+     Postorder(root);
+     return 0;
+     }
+

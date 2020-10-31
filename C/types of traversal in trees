@@ -1,0 +1,101 @@
+different types of traversal operations on trees.
+#include<stdio.h>
+#include<stdlib.h>
+struct tnode
+{
+	int data;
+	struct tnode *left;
+	struct tnode *right;
+};
+
+void inorder(struct tnode *root)
+{
+	if(root!=NULL)
+	{
+		inorder(root->left);
+		printf("%d ",root->data);
+		inorder(root->right);
+	}
+}
+
+void preorder(struct tnode *root)
+{
+	if(root!=NULL)
+	{
+		printf("%d ",root->data);
+		preorder(root->left);
+		preorder(root->right);
+	}
+}
+
+void postorder(struct tnode *root)
+{
+	if(root!=NULL)
+	{
+		postorder(root->left);
+		postorder(root->right);
+		printf("%d ",root->data);
+	}
+}
+void main()
+{
+	struct tnode *root, *newn, *temp, *ptemp;
+	int choice, da;
+	root=NULL;
+	
+	newn=(struct tnode *)malloc(sizeof(struct tnode));
+	newn->data=24;
+	newn->left=NULL;
+	newn->right=NULL;
+	root=newn;
+	
+	while(1)
+	{
+	printf("Enter node info to add to tree, -1 to quit");
+	scanf("%d",&da);
+	
+	if(da==-1) break;
+	
+	newn=(struct tnode *)malloc(sizeof(struct tnode));
+	newn->data=da;
+	newn->left=NULL;
+	newn->right=NULL;
+	
+	if(root==NULL)
+	{
+		root=newn;
+	}
+	else
+	{
+		temp=root;
+		while(temp!=NULL)
+		{
+			ptemp=temp;
+			printf("\nEnter 1 for Left 2 for Right of %d : ",ptemp->data);
+			scanf("%d",&choice);
+			if(choice==1)
+				temp=temp->left;
+			else 
+			if(choice==2)
+					temp=temp->right;
+			else
+				{
+					printf("Invlaid choice");
+					continue;	
+				}
+		}
+		if(choice==1)
+			ptemp->left=newn;
+		else
+			ptemp->right=newn;
+					
+	}
+	}
+	printf("\nInorder traversal: ");
+	inorder(root);
+	printf("\nPreorder traversal: ");
+	preorder(root);
+	printf("\nPostorder traversal: ");
+	postorder(root);
+	
+}
